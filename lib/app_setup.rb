@@ -101,7 +101,7 @@ module AppSetup
       puts "Please correct the following errors: " unless object.errors.blank?
       object.errors.each do |k, v|
         puts "#{k}:"
-        v.each {|message| puts "   - #{message}"}
+        v.each_line {|message| puts "   - #{message}"}
       end
     end
     
