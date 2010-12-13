@@ -1,7 +1,7 @@
 require File.join(File.dirname(__FILE__), "boot")
 
 # Specifies gem version of Rails to use when vendor/rails is not present
-RAILS_GEM_VERSION = '2.3.9' unless defined? RAILS_GEM_VERSION
+RAILS_GEM_VERSION = '2.3.10' unless defined? RAILS_GEM_VERSION
 
 # Bootstrap the Rails environment, frameworks, and default configuration
 require File.join(File.dirname(__FILE__), 'boot')
@@ -14,7 +14,7 @@ Rails::Initializer.run do |config|
   # Gem configuration.
   config.gem "sentry"
   config.gem "rubyist-aasm",            :lib => "aasm"
-  config.gem "highline"
+  config.gem "highline", :version => '~>1.6.1'
   
   # Gems for testing.
   config.gem "thoughtbot-shoulda",      :lib => "shoulda/rails"
