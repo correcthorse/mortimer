@@ -11,16 +11,6 @@ Rails::Initializer.run do |config|
   # This project does not use ActiveResource.
   config.frameworks -= [:active_resource]
 
-  # Gem configuration.
-  config.gem "sentry"
-  config.gem "rubyist-aasm",            :lib => "aasm"
-  config.gem "highline", :version => '~>1.6.1'
-  
-  # Gems for testing.
-  config.gem "shoulda",      :lib => "shoulda/rails"
-  config.gem "factory_girl"
-  config.gem "mocha"
-  
   config.plugins = [ :all ]
 
   # Add additional load paths for your own custom dirs
