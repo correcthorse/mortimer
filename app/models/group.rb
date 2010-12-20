@@ -31,7 +31,7 @@ class Group < ActiveRecord::Base
       groups.each do |group|
 	  if group.id != idz.to_i
 	  #if group.id != idz
-	  puts idz
+	  #puts idz
         name = (parent_name.blank? ? parent_name : "#{parent_name} - ") + group.title
         list << [name, group.id]
         list = in_pairs(group.children, name, list, idz)
