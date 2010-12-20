@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/../test_helper'
+require 'test_helper'
 
 # These tests were added by the Restful Authentication Plugin,
 # and modified to take advantage of factories instead of fixtures.
@@ -47,13 +47,13 @@ class UserRestfulAuthTest < ActiveSupport::TestCase
     end
   
     should "not rehash password" do
-      old_password = SessionPasswordEncryptor.encrypt('Monkey$$')
+      old_password = SessionPasswordEncryptor.encrypt('Monkey$$12345')
       @quentin.update_attributes(:login => 'quentin2', :old_password => old_password) 
-      assert_equal @quentin, User.authenticate('quentin2', 'Monkey$$')
+      assert_equal @quentin, User.authenticate('quentin2', 'Monkey$$12345')
     end
   
     should "authenticate user" do
-      assert_equal @quentin, User.authenticate('quentin', 'Monkey$$')
+      assert_equal @quentin, User.authenticate('quentin', 'Monkey$$12345')
     end
   
   end
@@ -62,14 +62,14 @@ class UserRestfulAuthTest < ActiveSupport::TestCase
 
   def create_user(options = {})
     record = Factory.build(:user, {:login => 'quire', :email => 'quire@example.com', 
-      :password => 'Secret@@', :password_confirmation => 'Secret@@'}.merge(options))
+      :password => 'Secret@@12345', :password_confirmation => 'Secret@@12345'}.merge(options))
     record.save if record.valid?
     record
   end
 
   def setup_restful_auth_user
     @quentin = Factory(:user, :login => "quentin", :email => "quentin@example.com",
-      :password => "Monkey$$", :password_confirmation => "Monkey$$")
-  end  
+      :password => "Monkey$$12345", :password_confirmation => "Monkey$$12345")
+  end
 
-end  
+end

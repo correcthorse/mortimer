@@ -1,6 +1,5 @@
 ENV["RAILS_ENV"] = "test"
-require File.expand_path(File.dirname(__FILE__) + "/../config/environment")
-$:.unshift(File.dirname(__FILE__))
+require File.expand_path("../../config/environment", __FILE__)
 
 require "test_help"
 require "shoulda"
@@ -15,7 +14,7 @@ Dir.entries(File.join(File.dirname(__FILE__), "factories")).each do |f|
 end    
 
 # Custom helpers can be found in custom_test_helpers.rb.
-class Test::Unit::TestCase
+class ActiveSupport::TestCase
   include Factories 
   include AuthenticatedTestHelper
   include CustomTestHelpers

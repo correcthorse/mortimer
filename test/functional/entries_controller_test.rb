@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/../test_helper'
+require 'test_helper'
 
 class EntriesControllerTest < ActionController::TestCase
 
@@ -17,8 +17,7 @@ class EntriesControllerTest < ActionController::TestCase
         login_as @user, USER_PASSWORD
         xhr :get, :show, :id => @entry
       end
-
-      should_render_template "show" 
+      should render_template('show')
     end 
 
     context "A user without access" do 
@@ -37,9 +36,8 @@ class EntriesControllerTest < ActionController::TestCase
         login_as @user, "secret@@" 
         get :show, :id => @entry
       end 
-
-      should_redirect_to "home_url"
-      should_set_the_flash_to /sorry/i
+      should_redirect_to('home') { home_path }
+      should set_the_flash.to(/sorry/i)
     end  
 
   end
@@ -57,16 +55,18 @@ class EntriesControllerTest < ActionController::TestCase
         get :new
       end
 
-      should_render_template "new"
+      should render_template('new')
     end
 
     context "on post create" do 
       setup do 
         login_as @admin, ADMIN_PASSWORD
-        post :create, :entry => Factory.attributes_for(:entry).merge(:group_id => @group.id.to_s) 
       end
-
-      should_change "Entry.count", :from => 1, :to => 2
+      should 'create entry' do
+        assert_difference 'Entry.count' do
+          post :create, :entry => Factory.attributes_for(:entry).merge(:group_id => @group.id.to_s) 
+        end
+      end
     end  
 
     context "on get edit" do 
@@ -75,7 +75,7 @@ class EntriesControllerTest < ActionController::TestCase
         get :edit, :id => @entry
       end
 
-      should_render_template "edit"
+      should render_template('edit')
     end  
 
     context "on put update" do
@@ -91,10 +91,12 @@ class EntriesControllerTest < ActionController::TestCase
     context "on destroy" do
       setup do 
         login_as @admin, ADMIN_PASSWORD
-        delete :destroy, :id => @entry
       end
-
-      should_change "Entry.count", :from => 1, :to => 0
+      should 'delete entry' do
+        assert_difference 'Entry.count', -1 do
+          delete :destroy, :id => @entry
+        end
+      end
     end  
   end  
 
@@ -109,7 +111,7 @@ class EntriesControllerTest < ActionController::TestCase
       setup do 
         @user.permissions.create(:group => @group, :mode => "READ",
           :admin_user => @admin, :admin_password => CRYPTED_ADMIN_PASSWORD)
-        login_as @user, "Secret@@"
+        login_as @user, "Secret@@12345$%"
       end
    
       should "not access new" do
@@ -142,7 +144,7 @@ class EntriesControllerTest < ActionController::TestCase
       setup do 
         @user.permissions.create(:group => @group, :mode => "WRITE",
           :admin_user => @admin, :admin_password => CRYPTED_ADMIN_PASSWORD)
-        login_as @user, "Secret@@"
+        login_as @user, "Secret@@12345$%"
       end
 
       should "access new" do

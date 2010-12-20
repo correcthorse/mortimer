@@ -17,8 +17,8 @@ Rails::Initializer.run do |config|
   config.gem "highline", :version => '~>1.6.1'
   
   # Gems for testing.
-  config.gem "thoughtbot-shoulda",      :lib => "shoulda/rails"
-  config.gem "thoughtbot-factory_girl", :lib => "factory_girl"
+  config.gem "shoulda",      :lib => "shoulda/rails"
+  config.gem "factory_girl"
   config.gem "mocha"
   
   config.plugins = [ :all ]
@@ -38,8 +38,8 @@ Rails::Initializer.run do |config|
   # Make sure the secret is at least 30 characters and all random, 
   # no regular words or you"ll be exposed to dictionary attacks.
   config.action_controller.session = {
-    :session_key => "_mortimer_session",
-    :secret      => "f7c48e8519307fcca9e779a6da67932d4ca473a7056c3bdc32420101192c22fc7c33844c76de698e86967"
+    :key => "_mortimer_session",
+    :secret => "f7c48e8519307fcca9e779a6da67932d4ca473a7056c3bdc32420101192c22fc7c33844c76de698e86967"
   }
 
   # Since this application demands the temporary.

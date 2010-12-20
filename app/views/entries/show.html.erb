@@ -2,7 +2,7 @@
 <div class="overlay_content">
 	<div id="boxmenu">
 		<h2>
-			<%= @entry.group.title + ": <span>" + truncate(@entry.title, 60) + "</span>" %>
+			<%= @entry.group.title + ": <span>" + truncate(@entry.title, :length => 60) + "</span>" %>
 		
 			<% if @entry.allows_write_access_for?(current_user) %>
 			<em>(<a href="<%= edit_entry_url(@entry) %>">edit / delete</a>)</em>

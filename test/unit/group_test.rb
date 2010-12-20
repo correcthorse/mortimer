@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/../test_helper'
+require 'test_helper'
 
 class GroupTest < ActiveSupport::TestCase
 
@@ -8,8 +8,8 @@ class GroupTest < ActiveSupport::TestCase
   end  
   
   context "Group relationships" do
-    should_have_many :entries
-    should_have_many :users, :through => :permissions
+    should have_many(:entries)
+    should have_many(:users).through(:permissions)
   end
 
   context "When an admin exists" do 

@@ -1,5 +1,4 @@
-require File.dirname(__FILE__) + '/../test_helper'
-require 'users_controller'
+require 'test_helper'
 
 # Re-raise errors caught by the controller.
 class UsersController; def rescue_action(e) raise e end; end
@@ -18,12 +17,12 @@ class UsersControllerTest < ActionController::TestCase
 
       should "access to index" do
         get :index
-        assert_template /index/
+        assert_template 'index'
       end   
 
       should "access edit" do 
         get :edit, :id => @user.id
-        assert_template /edit/
+        assert_template 'edit'
       end
 
       should "access update" do 
@@ -143,6 +142,7 @@ class UsersControllerTest < ActionController::TestCase
   protected
     def create_user(options = {})
       post :create, :user => { :login => 'quire', :email => 'quire@example.com',
-        :password => 'Quire699', :password_confirmation => 'Quire699' }.merge(options)
+        :password => 'Quire699!!12345',
+        :password_confirmation => 'Quire699!!12345' }.merge(options)
     end
 end

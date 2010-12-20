@@ -1,9 +1,9 @@
 class EntriesController < ApplicationController
    
   # Admin required to delete.
-  #before_filter :admin_required, :only => :destroy
+  before_filter :admin_required, :only => :destroy
 
-  # Write permissions required for new (see action), create, edit, and update.
+  # Write permissions required for new (see action), create, edit and update.
   before_filter :write_permissions_required, :only => [:edit, :update]
   before_filter :write_permissions_on_new,   :only => [:new, :create]
 

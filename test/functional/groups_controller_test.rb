@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/../test_helper'
+require 'test_helper'
 
 class GroupsControllerTest < ActionController::TestCase
   
@@ -14,7 +14,7 @@ class GroupsControllerTest < ActionController::TestCase
         get :index
       end
 
-      should_render_template "index"
+      should render_template('index')
     end  
 
     context "on get new" do 
@@ -23,17 +23,20 @@ class GroupsControllerTest < ActionController::TestCase
         get :new
       end  
 
-      should_respond_with    :success
-      should_render_template "new"
+      should respond_with(:success)
+      should render_template('new')
     end  
 
-    context "on post create" do 
+    context "on post create" do
       setup do 
         login_as @admin
-        post :create, :group => {:title => "VPS Password"}
       end  
       
-      should_change "Group.count", :from => 0, :to => 1 
+      should 'create group' do
+        assert_difference 'Group.count' do
+          post :create, :group => {:title => "VPS Password"}
+        end
+      end
     end  
   end
 

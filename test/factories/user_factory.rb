@@ -13,8 +13,8 @@ module Factories
     a.login                  { Factory.next(:login) }
     a.first_name             "test"
     a.last_name              "user"
-    a.password               "Secret@@" 
-    a.password_confirmation  "Secret@@" 
+    a.password               "Secret@@12345$%" 
+    a.password_confirmation  "Secret@@12345$%" 
   end
   
 end

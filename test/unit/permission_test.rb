@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/../test_helper'
+require 'test_helper'
 
 class PermissionTest < ActiveSupport::TestCase
 
@@ -8,13 +8,13 @@ class PermissionTest < ActiveSupport::TestCase
   end
 
   context "Relationships:" do
-    should_belong_to :admin_user
-    should_belong_to :user
-    should_belong_to :group    
+    should belong_to(:admin_user)
+    should belong_to(:user)
+    should belong_to(:group)
   end
   
-  context "Validations: " do 
-    setup do 
+  context "Validations: " do
+    setup do
       @red_group  = Factory(:group)
       @blue_group = Factory(:group, :parent => @red_group)
       @deep_group = Factory(:group, :parent => @blue_group)
@@ -23,12 +23,16 @@ class PermissionTest < ActiveSupport::TestCase
         :mode => "READ", :admin_user => @root, :admin_password => CRYPTED_ADMIN_PASSWORD)
     end
 
-    should_require_attributes :user, :group
+    should validate_presence_of(:user)
+    should validate_presence_of(:group)
     
-    should_allow_values_for :mode, "ADMIN", "WRITE", "READ"
+    ["ADMIN", "WRITE", "READ"].each do |value|
+      should allow_value(value).for(:mode)
+    end
 
-    should_require_unique_attributes :user_id, :scoped_to => :group_id, 
-      :message => /one user permission/
+    should validate_uniqueness_of(:user_id).scoped_to(:group_id).with_message(
+      /one user permission/
+    )
 
     should "not create permission to the child group when a user has access to the root" do 
       @permission = Permission.create(:group => @blue_group, :user => @joe_user, 
@@ -44,7 +48,7 @@ class PermissionTest < ActiveSupport::TestCase
     end
 
     context "When a user has access to a child-level group," do
-      setup do 
+      setup do
         @bob_user   = Factory(:user) 
         @permission = Permission.create(:group => @blue_group, :user => @bob_user, 
           :mode => "READ", :admin_user => @root, :admin_password => CRYPTED_ADMIN_PASSWORD)
@@ -56,23 +60,23 @@ class PermissionTest < ActiveSupport::TestCase
         assert_match /remove the subgroup permissions first/, @permission.errors[:base]
         assert @permission.new_record?
       end
-    end  
-  end  
-  
+    end
+  end
+
   context "Adding and removing permissions: " do 
     setup do 
       @group       = Factory(:group, :admin_user => @root)
       @blue_group  = Factory(:group, :admin_user => @root)
       @joe_user    = create_admin_user
       @bob_user    = Factory(:user)
-      
+
       @red_entry   = Factory(:entry, :title => "FIRST",  :group => @group)
       @blue_entry  = Factory(:entry, :title => "SECOND", :group => @group)
       @green_entry = Factory(:entry, :title => "THIRD",  :group => @group)
       @entry_not_in_group = Factory(:entry, :title => "MAIN", :group => @blue_group)
       @group.reload
     end
-    
+
     context "a user without admin permission to a group" do 
       setup do 
         @user_lacking_permission   = Factory(:user)
@@ -80,14 +84,14 @@ class PermissionTest < ActiveSupport::TestCase
         @user_with_read_permission.permissions.create(:group => @group, 
           :mode => "READ", :admin_user => @root, :admin_password => CRYPTED_ADMIN_PASSWORD)
       end
-      
+
       should "not be able to grant access to that group" do 
         assert_raise(AdminUserRequired) do 
           @bob_user.permissions.create(:group => @group, :mode => "READ", 
             :admin_user => @user_lacking_permission, :admin_password => CRYPTED_USER_PASSWORD)
         end
       end
-      
+
       should "not be able to grant access even if user has read access" do 
         assert_raise(AdminUserRequired) do 
           @bob_user.permissions.create(:group => @group, :mode => "READ", 
@@ -95,7 +99,7 @@ class PermissionTest < ActiveSupport::TestCase
         end
       end
     end
-    
+
     context "a user is given group permission by an admin user: " do 
       setup do
         @joe_user.reload
@@ -103,7 +107,7 @@ class PermissionTest < ActiveSupport::TestCase
           :admin_user => @joe_user, :admin_password => CRYPTED_ADMIN_PASSWORD)
         reload_activerecord_instances
       end
-    
+
       should "add password entries for the new user" do
         @red_entry.decrypt_attributes_for(@bob_user, CRYPTED_USER_PASSWORD)
         assert_equal "crypted!", @red_entry.password
@@ -112,46 +116,46 @@ class PermissionTest < ActiveSupport::TestCase
         @green_entry.decrypt_attributes_for(@bob_user, CRYPTED_USER_PASSWORD)
         assert_equal "crypted!", @green_entry.password
       end
-      
+
       should "not add a password entry for an entry not in the group" do 
         assert_raise PermissionsError do 
           @entry_not_in_group.decrypt_attributes_for(@bob_user, CRYPTED_USER_PASSWORD)
         end
       end
-      
-      context "when those permissions are destroyed" do 
-        setup do 
-          @permission.destroy  
+
+      context "when those permissions are destroyed" do
+        setup do
+          @permission.destroy
           reload_activerecord_instances
-        end  
-        
-        should "raise a Permissions error if an entry is accessed" do 
-          assert_raise PermissionsError do 
+        end
+
+        should "raise a Permissions error if an entry is accessed" do
+          assert_raise PermissionsError do
             @red_entry.decrypt_attributes_for(@bob_user, CRYPTED_USER_PASSWORD)
           end
-          
-          assert_raise PermissionsError do 
+
+          assert_raise PermissionsError do
             @blue_entry.decrypt_attributes_for(@bob_user, CRYPTED_USER_PASSWORD)
-          end 
-          
+          end
+
           assert_raise PermissionsError do 
             @green_entry.decrypt_attributes_for(@bob_user, CRYPTED_USER_PASSWORD)
           end
-        end   
-      end    
+        end
+      end
 
-      context "the admin user is destroyed" do 
-        setup do 
+      context "the admin user is destroyed" do
+        setup do
           @joe_user.destroy
           reload_activerecord_instances
         end
-        
-        should "remove permission from @bob_user" do 
+
+        should "remove permission from @bob_user" do
           assert_raise(PermissionsError) { @red_entry.decrypt_attributes_for(@bob_user, CRYPTED_USER_PASSWORD) }
-          assert_raise(PermissionsError) { @blue_entry.decrypt_attributes_for(@bob_user, CRYPTED_USER_PASSWORD) } 
-          assert_raise(PermissionsError) { @green_entry.decrypt_attributes_for(@bob_user, CRYPTED_USER_PASSWORD) } 
+          assert_raise(PermissionsError) { @blue_entry.decrypt_attributes_for(@bob_user, CRYPTED_USER_PASSWORD) }
+          assert_raise(PermissionsError) { @green_entry.decrypt_attributes_for(@bob_user, CRYPTED_USER_PASSWORD) }
         end
       end
-    end    
+    end
   end
 end

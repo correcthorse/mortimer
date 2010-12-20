@@ -1,10 +1,10 @@
-require File.dirname(__FILE__) + '/../test_helper'
+require 'test_helper'
 
 class UserTest < ActiveSupport::TestCase
   
   context "User relationships:" do 
-    should_have_many :groups, :through => :permissions
-    should_have_many :granted_permissions, :dependent => :destroy
+    should have_many(:groups).through(:permissions)
+    should have_many(:granted_permissions).dependent(:destroy)
   end
   
   context "A newly-created user" do 
@@ -24,12 +24,12 @@ class UserTest < ActiveSupport::TestCase
     context "when updating password" do 
       setup do 
         old_password = SessionPasswordEncryptor.encrypt(USER_PASSWORD)
-        @user.update_attributes(:password => "Unknown$$", :password_confirmation => "Unknown$$", 
+        @user.update_attributes!(:password => "Unknown$$12345", :password_confirmation => "Unknown$$12345",
           :old_password => old_password)
       end
 
       should "re-encrypt the private key with the new password" do 
-        key = Sentry::SymmetricSentry.decrypt_from_base64(@user.crypted_private_key, "Unknown$$")
+        key = Sentry::SymmetricSentry.decrypt_from_base64(@user.crypted_private_key, "Unknown$$12345")
         assert_match /RSA PRIVATE KEY/, key
       end
     end
