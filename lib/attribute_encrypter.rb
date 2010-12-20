@@ -24,8 +24,7 @@ module AttributeEncrypter
       read_inheritable_attribute(:crypted_attributes) || write_inheritable_attribute(:crypted_attributes, {})
     end
 
-    # TODO: Commented out temporarily in order to get the tests running
-    #protected
+    protected
 
       # Pointer to the current crypted attribute; this way, 
       # it's not necessary to pass this value around.
@@ -80,7 +79,9 @@ module AttributeEncrypter
       # Adds attribute_updated? and attr_accessor. 
       def define_crypted_attribute_methods_and_callbacks
         define_attribute_updated
+        self.send(:public)
         self.send(:attr_accessor, current_crypted_attribute[:name])
+        self.send(:protected)
       end  
 
       # Instance method to determine whether the attribute needs to be
