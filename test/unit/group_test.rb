@@ -38,7 +38,7 @@ class GroupTest < ActiveSupport::TestCase
 
     should "not be deletable" do
       assert !@group.destroy
-      assert_match /not empty/, @group.errors[:base]
+      assert_match /not empty/, @group.errors[:base].first
     end  
 
     should "delete the empty sub-group" do
@@ -54,7 +54,7 @@ class GroupTest < ActiveSupport::TestCase
     
     should "not be deletable" do
       assert !@group.destroy
-      assert_match /not empty/, @group.errors[:base]
+      assert_match /not empty/, @group.errors[:base].first
     end  
   end  
 

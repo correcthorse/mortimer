@@ -101,13 +101,13 @@ class UserTest < ActiveSupport::TestCase
       new_root = Factory.build(:user)
       new_root.is_root = true
       new_root.save
-      assert_match /one root user/, new_root.errors[:base]
+      assert_match /one root user/, new_root.errors[:base].first
     end
 
     should "be impossible to delete root" do
       root = User.root
       assert !root.destroy
-      assert_match /cannot delete the root user/i, root.errors[:base]
+      assert_match /cannot delete the root user/i, root.errors[:base].first
     end
 
   end
@@ -151,7 +151,7 @@ class UserTest < ActiveSupport::TestCase
 
     should "not be possible to delete if it's the only admin" do
       assert !@admin.destroy
-      assert_match /last admin/, @admin.errors[:base] 
+      assert_match /last admin/, @admin.errors[:base].first
     end
 
     should "be deletable if another admin user exists" do 

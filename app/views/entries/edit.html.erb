@@ -6,7 +6,7 @@
 
 <%= error_messages_for :entry %>
 
-<% form_tag entry_url(@entry), :method => "put" do %>
+<%= form_tag entry_url(@entry), :method => "put" do %>
 
 	<%= render :partial => "form" %>
 

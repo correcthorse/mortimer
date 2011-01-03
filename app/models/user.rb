@@ -39,10 +39,10 @@ class User < ActiveRecord::Base
   attr_accessible :login, :email, :first_name, :last_name, :old_password, :password, :password_confirmation
 
   # Returns all admins
-  named_scope :admins, :conditions => {:is_admin => true}
+  scope :admins, :conditions => {:is_admin => true}
 
   # List of all users except root
-  named_scope :index, :conditions => {:is_root => false}, :order => "last_name, first_name"
+  scope :index, :conditions => {:is_root => false}, :order => "last_name, first_name"
 
   # ***** Callbacks ***** #
   before_destroy :fail_if_deleting_last_admin, :fail_if_deleting_root
@@ -50,14 +50,14 @@ class User < ActiveRecord::Base
   # ***** Class Methods ***** #
   # Return the root user.
   def self.root
-    find :first, :conditions => {:is_root => true}
+    find_by_is_root(true)
   end
   
   # Authenticates a user by login name and unencrypted password.  
   # Returns the user or nil.
   def self.authenticate(login, password)
     return nil if login.blank? || password.blank?
-    u = find :first, :conditions => {:login => login}
+    u = find_by_login(login)
     u && u.authenticated?(password) ? u : nil
   end
 

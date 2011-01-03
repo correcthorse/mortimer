@@ -2,8 +2,9 @@
 
   <% unless Group.non_permitted_for_user(@user.groups).blank? %>
 		<div id="form_permissions">
-			<% form_remote_tag :url => permissions_url(:user_id => @user.id), :update => "permissions", 
-				:html => {:method => :post} do %>
+			<%= form_tag(permissions_url(:user_id => @user.id),
+			      { :update => "permissions", 
+				      :remote => true, :method => :post}) do %>
 				<%= render :partial => "/permissions/form" %>
 				<% if @user.permissions.blank? %>
 					<div class="message">

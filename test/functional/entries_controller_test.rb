@@ -27,7 +27,7 @@ class EntriesControllerTest < ActionController::TestCase
 
       should "render access denied" do 
         xhr :get, :show, :id => @entry
-        assert_match /401/, @response.status
+        assert_equal 401, @response.status
       end  
     end  
 

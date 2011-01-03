@@ -2,7 +2,7 @@
 <div id="content_body">
 	<h1>Edit Group</h1>
 	<div class="edit_group">
-		<% form_tag group_url(@group), :method => "put" do %>
+		<%= form_tag group_url(@group), :method => "put" do %>
 			<%= error_messages_for :group %>
 			<%= render :partial => "form" %>
 

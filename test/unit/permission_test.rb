@@ -37,14 +37,14 @@ class PermissionTest < ActiveSupport::TestCase
     should "not create permission to the child group when a user has access to the root" do 
       @permission = Permission.create(:group => @blue_group, :user => @joe_user, 
         :mode => "READ", :admin_user => @root, :admin_password => CRYPTED_ADMIN_PASSWORD)
-      assert_match /User already has permission to the parent group/, @permission.errors[:base]
+      assert_match /User already has permission to the parent group/, @permission.errors[:base].first
       assert @permission.new_record?
     end
 
     should "not allow a third-level group or deeper" do
       @permission.group = @deep_group
       assert !@permission.save
-      assert_match /level too deep/, @permission.errors[:group]
+      assert_match /level too deep/, @permission.errors[:group].first
     end
 
     context "When a user has access to a child-level group," do
@@ -57,7 +57,7 @@ class PermissionTest < ActiveSupport::TestCase
       should "not create permission to the parent group" do
         @permission = Permission.create(:group => @red_group, :user => @bob_user, 
          :mode => "READ", :admin_user => @root, :admin_password => CRYPTED_ADMIN_PASSWORD) 
-        assert_match /remove the subgroup permissions first/, @permission.errors[:base]
+        assert_match /remove the subgroup permissions first/, @permission.errors[:base].first
         assert @permission.new_record?
       end
     end

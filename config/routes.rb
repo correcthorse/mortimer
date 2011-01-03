@@ -1,16 +1,16 @@
-ActionController::Routing::Routes.draw do |map|
-
-  map.logout "/logout", :controller => "sessions", :action => "destroy"
-  map.login  "/login",  :controller => "sessions", :action => "new"
-
-  map.resources :users,  :member => {:toggle_admin => :post, :reset_password => :post}
-  map.resource  :user_password
-  map.resources :settings
-  map.resources :groups, :entries, :permissions
-  map.resource  :session
+Mortimer::Application.routes.draw do
   
-  map.home "/",
-    :controller => "groups",
-    :action     => "index"
+  match '/logout' => 'sessions#destroy', :as => :logout
+  match '/login' => 'sessions#new', :as => :login
 
+  resources :users do
+    member do
+      post 'toggle_admin'
+      post 'reset_password'
+    end
+  end
+  resource  :user_password, :session
+  resources :settings, :groups, :entries, :permissions
+  
+  root :to => 'groups#index', :as => :home
 end

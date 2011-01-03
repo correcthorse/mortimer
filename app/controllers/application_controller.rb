@@ -20,9 +20,6 @@ class ApplicationController < ActionController::Base
   after_filter :check_admin_permissions
 
   protect_from_forgery
-  
-  # Don't log passwords, password_confirmations, usernames, or urls. 
-  filter_parameter_logging :password, :password_confirmation, :username, :url
 
   protected
     
@@ -48,7 +45,7 @@ class ApplicationController < ActionController::Base
 
     # The app must be run across SSL in production.
     def require_ssl_in_production
-      return unless ENV["RAILS_ENV"] == "production"
+      return unless Rails.env.production?
       if !request.ssl?
         redirect_to "https://" + request.host + request.request_uri
         flash.keep
@@ -85,5 +82,5 @@ class ApplicationController < ActionController::Base
       Permission.admin_permissions_consistent?
       return true
     end
-
+  
 end

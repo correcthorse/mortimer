@@ -26,7 +26,7 @@ module CustomAuthorizationMethods
   
     # Store failed authorization attempts in the main log file.
     def note_access_denied(exception)
-      logger.warn "Security Exception (#{exception}): Access denied for '#{current_user.login}' from #{request.remote_ip} at #{Time.now.utc}, attempting '#{request.request_uri}', (#{self.controller_name}: #{self.action_name})."
+      logger.warn "Security Exception (#{exception}): Access denied for '#{current_user.login}' from #{request.remote_ip} at #{Time.now.utc}, attempting '#{request.fullpath}', (#{self.controller_name}: #{self.action_name})."
     end
 end
 

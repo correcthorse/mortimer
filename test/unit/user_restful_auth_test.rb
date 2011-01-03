@@ -21,28 +21,28 @@ class UserRestfulAuthTest < ActiveSupport::TestCase
     should "require login" do
       assert_no_difference 'User.count' do
         u = create_user(:login => nil)
-        assert u.errors.on(:login)
+        assert !u.errors[:login].empty?
       end
     end
   
     should "require password" do
       assert_no_difference 'User.count' do
         u = create_user(:password => nil)
-        assert u.errors.on(:password)
+        assert !u.errors[:password].empty?
       end
     end
   
     should "require password confirmation" do
       assert_no_difference 'User.count' do
         u = create_user(:password_confirmation => nil)
-        assert u.errors.on(:password_confirmation)
+        assert !u.errors[:password_confirmation].empty?
       end
     end
   
     should "require email" do
       assert_no_difference 'User.count' do
         u = create_user(:email => nil)
-        assert u.errors.on(:email)
+        assert !u.errors[:email].empty?
       end
     end
   
