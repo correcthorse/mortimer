@@ -47,11 +47,11 @@ class ApplicationController < ActionController::Base
     def require_ssl_in_production
       return unless Rails.env.production?
       if !request.ssl?
-        redirect_to "https://" + request.host + request.request_uri
+        redirect_to "https://" + request.host + request.fullpath
         flash.keep
         return false
       end
-    end  
+    end
     
     # Expires the session after a certain inactivity period.
     # See config/security.rb to set the interval.
