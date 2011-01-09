@@ -1,0 +1,17 @@
+defaults: &defaults
+  entries:
+    # Use something between 1 and 40
+    min_password_length: 2
+    username_needed: true
+
+development:
+  <<: *defaults
+
+test:
+  <<: *defaults
+  entries:
+    min_password_length: 7
+    username_needed: true
+
+production:
+  <<: *defaults

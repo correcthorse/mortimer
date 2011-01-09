@@ -14,9 +14,11 @@ class EntryTest < ActiveSupport::TestCase
   context "Validations:" do
     should validate_presence_of(:group)
     should validate_presence_of(:title)
-    should validate_presence_of(:username)
+    
+    should ensure_length_of(:username).is_at_least(1).is_at_most(110)
     should validate_presence_of(:password)
-    should ensure_length_of(:password).is_at_least(6).is_at_most(40)
+    min = Settings.entries.min_password_length
+    should ensure_length_of(:password).is_at_least(min).is_at_most(40)
     should ensure_length_of(:title).is_at_least(2).is_at_most(110)
   end  
   

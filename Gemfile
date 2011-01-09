@@ -4,6 +4,7 @@ gem 'sqlite3-ruby', :require => "sqlite3"
 gem 'sentry'
 gem 'aasm'
 gem 'highline'
+gem 'settingslogic'
 
 group :development, :test do
   gem 'shoulda', :require => 'shoulda/rails'
