@@ -1,7 +1,7 @@
 development:
   adapter: mysql
   database: pwd_development
-  user: root
+  username: root
   password:
 
 # Warning: The database defined as "test" will be erased and
@@ -10,7 +10,7 @@ development:
 test:
   adapter: mysql
   database: pwd_test
-  user: root
+  username: root
   password:
   
 production:
