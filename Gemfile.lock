@@ -99,6 +99,3 @@ DEPENDENCIES
   settingslogic
   shoulda
   sqlite3-ruby
-
-BUNDLED WITH
-   1.10.6
