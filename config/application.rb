@@ -10,6 +10,27 @@ end
 # you've limited to :test, :development, or :production.
 Bundler.require(:default, Rails.env) if defined?(Bundler)
 
+#Workaround for bug in some 3.0.x releases
+ActionController::Base.config.relative_url_root = ''
+
+#another workaround for rails 3.0 on ruby 2
+if Rails::VERSION::MAJOR == 3 && Rails::VERSION::MINOR == 0 && RUBY_VERSION >= "2.0.0"
+  module ActiveRecord
+    module Associations
+      class AssociationProxy
+        def send(method, *args)
+          if proxy_respond_to?(method, true)
+            super
+          else
+            load_target
+            @target.send(method, *args)
+          end
+        end
+      end
+    end
+  end
+end
+
 module Mortimer
   class Application < Rails::Application
     # Settings in config/environments/* take precedence over those specified here.
