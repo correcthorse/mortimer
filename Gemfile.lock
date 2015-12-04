@@ -25,6 +25,8 @@ GEM
       activesupport (= 3.0.3)
       arel (~> 2.0.2)
       tzinfo (~> 0.3.23)
+    activerecord-mysql2-adapter (0.0.3)
+      mysql2
     activeresource (3.0.3)
       activemodel (= 3.0.3)
       activesupport (= 3.0.3)
@@ -47,6 +49,7 @@ GEM
     mime-types (1.16)
     mocha (0.9.10)
       rake
+    mysql2 (0.4.2)
     polyglot (0.3.1)
     rack (1.2.1)
     rack-mount (0.6.13)
@@ -81,11 +84,16 @@ PLATFORMS
 
 DEPENDENCIES
   aasm
+  activerecord-mysql2-adapter
   factory_girl_rails
   highline
   mocha
+  mysql2
   rails (= 3.0.3)
   sentry
   settingslogic
   shoulda
   sqlite3-ruby
+
+BUNDLED WITH
+   1.10.6

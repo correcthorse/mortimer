@@ -5,6 +5,8 @@ gem 'sentry'
 gem 'aasm'
 gem 'highline'
 gem 'settingslogic'
+gem 'mysql2'
+gem 'activerecord-mysql2-adapter'
 
 group :development, :test do
   gem 'shoulda', :require => 'shoulda/rails'
