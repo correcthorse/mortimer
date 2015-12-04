@@ -2,11 +2,11 @@
 module CustomTestHelpers
 
   # A default password for admins and root.
-  ADMIN_PASSWORD = "Secret@@"
+  ADMIN_PASSWORD = "Secret@@12345$%"
   CRYPTED_ADMIN_PASSWORD = SessionPasswordEncryptor.encrypt(ADMIN_PASSWORD) 
   
   # A default password for users.
-  USER_PASSWORD  = "Secret@@"
+  USER_PASSWORD  = "Secret@@12345$%"
   CRYPTED_USER_PASSWORD = SessionPasswordEncryptor.encrypt(USER_PASSWORD)
 
   # A default password for entries.

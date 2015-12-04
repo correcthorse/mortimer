@@ -79,7 +79,9 @@ module AttributeEncrypter
       # Adds attribute_updated? and attr_accessor. 
       def define_crypted_attribute_methods_and_callbacks
         define_attribute_updated
+        self.send(:public)
         self.send(:attr_accessor, current_crypted_attribute[:name])
+        self.send(:protected)
       end  
 
       # Instance method to determine whether the attribute needs to be
@@ -109,7 +111,7 @@ module AttributeEncrypter
         self.send(crypted_attr.setter, asymmetric_decrypt(crypted_attr.data, user.crypted_private_key, user_password))
       end
 
-      rescue OpenSSL::CipherError
+      rescue OpenSSL::Cipher::CipherError
         raise PermissionsError
     end 
 

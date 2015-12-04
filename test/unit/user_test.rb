@@ -1,10 +1,10 @@
-require File.dirname(__FILE__) + '/../test_helper'
+require 'test_helper'
 
 class UserTest < ActiveSupport::TestCase
   
   context "User relationships:" do 
-    should_have_many :groups, :through => :permissions
-    should_have_many :granted_permissions, :dependent => :destroy
+    should have_many(:groups).through(:permissions)
+    should have_many(:granted_permissions).dependent(:destroy)
   end
   
   context "A newly-created user" do 
@@ -24,12 +24,12 @@ class UserTest < ActiveSupport::TestCase
     context "when updating password" do 
       setup do 
         old_password = SessionPasswordEncryptor.encrypt(USER_PASSWORD)
-        @user.update_attributes(:password => "Unknown$$", :password_confirmation => "Unknown$$", 
+        @user.update_attributes!(:password => "Unknown$$12345", :password_confirmation => "Unknown$$12345",
           :old_password => old_password)
       end
 
       should "re-encrypt the private key with the new password" do 
-        key = Sentry::SymmetricSentry.decrypt_from_base64(@user.crypted_private_key, "Unknown$$")
+        key = Sentry::SymmetricSentry.decrypt_from_base64(@user.crypted_private_key, "Unknown$$12345")
         assert_match /RSA PRIVATE KEY/, key
       end
     end
@@ -101,13 +101,13 @@ class UserTest < ActiveSupport::TestCase
       new_root = Factory.build(:user)
       new_root.is_root = true
       new_root.save
-      assert_match /one root user/, new_root.errors[:base]
+      assert_match /one root user/, new_root.errors[:base].first
     end
 
     should "be impossible to delete root" do
       root = User.root
       assert !root.destroy
-      assert_match /cannot delete the root user/i, root.errors[:base]
+      assert_match /cannot delete the root user/i, root.errors[:base].first
     end
 
   end
@@ -151,7 +151,7 @@ class UserTest < ActiveSupport::TestCase
 
     should "not be possible to delete if it's the only admin" do
       assert !@admin.destroy
-      assert_match /last admin/, @admin.errors[:base] 
+      assert_match /last admin/, @admin.errors[:base].first
     end
 
     should "be deletable if another admin user exists" do 

@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/../test_helper'
+require 'test_helper'
 
 class GroupTest < ActiveSupport::TestCase
 
@@ -8,8 +8,8 @@ class GroupTest < ActiveSupport::TestCase
   end  
   
   context "Group relationships" do
-    should_have_many :entries
-    should_have_many :users, :through => :permissions
+    should have_many(:entries)
+    should have_many(:users).through(:permissions)
   end
 
   context "When an admin exists" do 
@@ -38,7 +38,7 @@ class GroupTest < ActiveSupport::TestCase
 
     should "not be deletable" do
       assert !@group.destroy
-      assert_match /not empty/, @group.errors[:base]
+      assert_match /not empty/, @group.errors[:base].first
     end  
 
     should "delete the empty sub-group" do
@@ -54,7 +54,7 @@ class GroupTest < ActiveSupport::TestCase
     
     should "not be deletable" do
       assert !@group.destroy
-      assert_match /not empty/, @group.errors[:base]
+      assert_match /not empty/, @group.errors[:base].first
     end  
   end  
 

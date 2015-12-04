@@ -13,8 +13,8 @@ class Group < ActiveRecord::Base
   validates_uniqueness_of :title, :scope => :parent_id
 
   # Scopes.
-  named_scope :ordered, :order => :title
-  named_scope :with_entries, :include => :entries, :order => "groups.title, entries.title"
+  scope :ordered, :order => :title
+  scope :with_entries, :include => :entries, :order => "groups.title, entries.title"
 
   # Callbacks.
   before_create :build_admin_permissions
@@ -31,7 +31,7 @@ class Group < ActiveRecord::Base
       groups.each do |group|
 	  if group.id != idz.to_i
 	  #if group.id != idz
-	  puts idz
+	  #puts idz
         name = (parent_name.blank? ? parent_name : "#{parent_name} - ") + group.title
         list << [name, group.id]
         list = in_pairs(group.children, name, list, idz)

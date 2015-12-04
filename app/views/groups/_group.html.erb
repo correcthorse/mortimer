@@ -1,5 +1,8 @@
-
-<ol class="listing_toggle passwords <%= level > 0 ? "slideable\" #{hide_if_group_closed(parent_group)}" : "\"" %>>
+<%
+classes = level > 0 ? 'slideable' : ''
+hide = level > 0 ? "#{hide_if_group_closed(parent_group)}" : ""
+%>
+<ol class="listing_toggle passwords <%=classes%>" <%=hide%>>
 		<% groups.each do |group_set| %>			
 		  <% group = get_group_from_set(group_set) %>			
 			<% next if level == 1 && !current_user.groups.include?(group.parent) && !current_user.groups.include?(group) %>

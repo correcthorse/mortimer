@@ -18,9 +18,9 @@
 		<tbody>
 			<% for user in @users %>
 			<tr <%= "class='admin'" if user.is_admin? %>>
-				<td class="first"><%=h user.full_name %></td> 
-				<td><%=h user.login %></td>
-				<td><a href="<%= edit_user_path(user) %>" title="edit user <%=h user.login %>">edit</a></td>
+				<td class="first"><%= user.full_name %></td> 
+				<td><%= user.login %></td>
+				<td><a href="<%= edit_user_path(user) %>" title="edit user <%= user.login %>">edit</a></td>
 			</tr>
 			<% end %>
 		</tbody>

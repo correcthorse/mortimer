@@ -1,24 +1,18 @@
 ENV["RAILS_ENV"] = "test"
-require File.expand_path(File.dirname(__FILE__) + "/../config/environment")
-$:.unshift(File.dirname(__FILE__))
+require File.expand_path('../../config/environment', __FILE__)
+require 'rails/test_help'
+require 'custom_test_helpers'
+require 'custom_assertions'
 
-require "test_help"
-require "shoulda"
-require "factory_girl"
-require "mocha"
-require "custom_assertions"
-require "custom_test_helpers"
+class ActiveSupport::TestCase
+  # Setup all fixtures in test/fixtures/*.(yml|csv) for all tests in alphabetical order.
+  #
+  # Note: You'll currently still have to declare fixtures explicitly in integration tests
+  # -- they do not yet inherit this setting
+  #fixtures :all
 
-# Require Factories
-Dir.entries(File.join(File.dirname(__FILE__), "factories")).each do |f| 
-  require File.join(File.dirname(__FILE__), "factories", f) if f =~ /\.rb$/
-end    
-
-# Custom helpers can be found in custom_test_helpers.rb.
-class Test::Unit::TestCase
-  include Factories 
-  include AuthenticatedTestHelper
+  # Add more helper methods to be used by all tests here...
+  
   include CustomTestHelpers
-
-  self.use_transactional_fixtures = true
+  include AuthenticatedTestHelper
 end

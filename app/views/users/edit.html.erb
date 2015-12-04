@@ -2,8 +2,7 @@
   <%= javascript_include_tag "/javascripts/user.js" %>
 <% end %>
 
-
-	<h1><%= @user == current_user ? "Edit | <span>#{@user.full_name}</span>" : "Edit | <span>#{@user.full_name}</span>" %></h1>
+	<h1>Edit | <span><%=@user.full_name%></span></h1>
 	
 	<!-- #content_body -->
 	<div id="content_body">
@@ -21,7 +20,7 @@
 		</ul>
 		
 		<div class="tab_content">
-			<% form_tag user_path(@user), :method => "put" do %>
+			<%= form_tag user_path(@user), :method => "put" do %>
 
 				<%= render :partial => "form" %>
 
@@ -65,13 +64,13 @@
 			<div class="module_content">
 				<ul class="listing_common">
 						<% if controller.action_name == "edit" && current_user.is_admin? && @user != current_user %>
-						<li><%= link_to "Reset password", user_url(@user) + "/reset_password", :method => "post", :class =>"icon reset" %></li>
+						<li><%= link_to "Reset password", reset_password_user_url(@user), :method => "post", :class =>"icon reset" %></li>
 						<% end %>				
 				
 						<li><%= link_to "Remove this User", @user, :confirm => "Are you sure?", 
 						:method => :delete, :class => "destroy icon remove" %></li>
 						
-						<li class="last"><%= link_to admin_toggle_text(@user) + " Admin Rights", user_path(@user) + "/toggle_admin", 
+						<li class="last"><%= link_to admin_toggle_text(@user) + " Admin Rights", toggle_admin_user_path(@user), 
 						:confirm => "Are you sure you want to #{admin_toggle_text(@user).upcase + " Admin Rights"}?",
 						:method => :post, :class => "destroy icon grant" %></li>
 				</ul>

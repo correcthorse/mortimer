@@ -1,5 +1,4 @@
-require File.dirname(__FILE__) + '/../test_helper'
-require 'sessions_controller'
+require 'test_helper'
 
 # Re-raise errors caught by the controller.
 class SessionsController; def rescue_action(e) raise e end; end
@@ -12,7 +11,7 @@ class SessionsControllerTest < ActionController::TestCase
     end
 
     should "login and redirect" do
-      post :create, :login => 'quentin', :password => 'Secret@@'
+      post :create, :login => 'quentin', :password => 'Secret@@12345$%'
       assert session[:user_id]
       assert_response :redirect
     end

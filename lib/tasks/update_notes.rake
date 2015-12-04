@@ -7,11 +7,11 @@ task :update_notes => :environment do
       entry.description = entry.notes
       if entry.save
         @entries_updated << entry
-        RAILS_DEFAULT_LOGGER.warn("Note Updater: Entry ##{entry.id} updated.")
+        Rails.logger.warn("Note Updater: Entry ##{entry.id} updated.")
       end
     end
   end
 
-  puts "#{@entries_updated.length} entries updated. See #{RAILS_ENV}.log for more details."
-  RAILS_DEFAULT_LOGGER.flush
+  puts "#{@entries_updated.length} entries updated. See #{Rails.env}.log for more details."
+  Rails.logger.flush
 end
