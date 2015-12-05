@@ -12,3 +12,8 @@
   name: correcthorse.httpd
   version: master
   path: roles/
+
+- src: https://github.com/correcthorse/ansible-ruby
+  name: correcthorse.ruby
+  version: master
+  path: roles/

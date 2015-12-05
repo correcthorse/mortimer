@@ -4,3 +4,4 @@
   - { role: correcthorse.common }
   - { role: correcthorse.mysql }
   - { role: correcthorse.httpd }
+  - { role: correcthorse.ruby }
