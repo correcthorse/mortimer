@@ -1,0 +1,6 @@
+---
+httpd_vhosts:
+  - servername: mortimer.local
+    documentroot: /var/www/mortimer.local/www/public
+    redirect_http_to_https: true
+    

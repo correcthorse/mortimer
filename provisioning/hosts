@@ -1,0 +1,2 @@
+[mortimer]
+mortimer-box ansible_connection=local ansible_become=true

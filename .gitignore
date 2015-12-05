@@ -5,3 +5,5 @@ tmp/**/*
 doc/api
 doc/app
 config/database.yml
+.vagrant
+provisioning/roles

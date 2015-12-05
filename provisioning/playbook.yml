@@ -1,0 +1,6 @@
+---
+- hosts: mortimer-box
+  roles:
+  - { role: correcthorse.common }
+  - { role: correcthorse.mysql }
+  - { role: correcthorse.httpd }
