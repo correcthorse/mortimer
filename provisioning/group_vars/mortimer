@@ -1,0 +1,48 @@
+---
+mortimer_app_root: "/var/www/mortimer.local/www"
+mortimer_doc_root: "{{ mortimer_app_root }}/public"
+
+#database defaults, override these in prod host_vars!
+mortimer_production_database: mortimer
+mortimer_production_username: mortimer
+mortimer_production_password: mortimer
+mortimer_development_database: mortimer_dev
+mortimer_development_username: mortimer_dev
+mortimer_development_password: mortimer_dev
+mortimer_test_database: mortimer_test
+mortimer_test_username: mortimer_test
+mortimer_test_password: mortimer_test
+
+
+mysql_databases:
+  - name: "{{ mortimer_production_database }}"
+  - name: "{{ mortimer_development_database }}"
+  - name: "{{ mortimer_test_database }}"
+
+mysql_users:
+  - name: "{{ mortimer_production_username }}"
+    host: "%"
+    password: "{{ mortimer_production_password }}"
+    priv: "{{ mortimer_production_database }}.*:ALL"
+  - name: "{{ mortimer_development_username }}"
+    host: "%"
+    password: "{{ mortimer_development_password }}"
+    priv: "{{ mortimer_development_database }}.*:ALL"
+  - name: "{{ mortimer_test_username }}"
+    host: "%"
+    password: "{{ mortimer_test_password }}"
+    priv: "{{ mortimer_test_database }}.*:ALL"
+
+
+common_extra_packages:
+  - sqlite-devel
+
+mysql_host: localhost
+
+httpd_mpm: event
+httpd_mod_ssl: true
+httpd_open_http_port: true
+httpd_open_https_port: true
+httpd_ssl_disable_default_vhost: true
+httpd_default_override: All
+httpd_can_network_connect: 'yes'

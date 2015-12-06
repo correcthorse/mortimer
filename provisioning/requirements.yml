@@ -1,0 +1,19 @@
+- src: https://github.com/correcthorse/ansible-common
+  name: correcthorse.common
+  version: master
+  path: roles/
+
+- src: https://github.com/correcthorse/ansible-mysql
+  name: correcthorse.mysql
+  version: master
+  path: roles/
+
+- src: https://github.com/correcthorse/ansible-httpd
+  name: correcthorse.httpd
+  version: master
+  path: roles/
+
+- src: https://github.com/correcthorse/ansible-ruby
+  name: correcthorse.ruby
+  version: master
+  path: roles/

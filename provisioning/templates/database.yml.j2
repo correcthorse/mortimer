@@ -1,0 +1,23 @@
+production:
+  adapter: mysql2
+  encoding: utf8
+  database: {{ mortimer_production_database }}
+  username: {{ mortimer_production_username }}
+  password: {{ mortimer_production_password }}
+  host: {{ mysql_host }}
+
+development:
+  adapter: mysql2
+  encoding: utf8
+  database: {{ mortimer_development_database }}
+  username: {{ mortimer_development_username }}
+  password: {{ mortimer_development_password }}
+  host: {{ mysql_host }}
+
+test:
+  adapter: mysql2
+  encoding: utf8
+  database: {{ mortimer_test_database }}
+  username: {{ mortimer_test_username }}
+  password: {{ mortimer_test_password }}
+  host: {{ mysql_host }}

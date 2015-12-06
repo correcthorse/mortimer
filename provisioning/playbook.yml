@@ -1,0 +1,43 @@
+---
+- hosts: mortimer
+  roles:
+  - { role: correcthorse.common }
+  - { role: correcthorse.mysql }
+  - { role: correcthorse.httpd }
+  - { role: correcthorse.ruby }
+
+- hosts: mortimer-box
+  become: yes
+  become_user: vagrant
+
+  tasks:
+
+  - name: symlink app dir into home dir
+    file: src="{{ mortimer_app_root }}" path=/home/vagrant/mortimer state=link
+
+  - name: configure databases
+    template: src=templates/database.yml.j2 dest="{{ mortimer_app_root }}/config/database.yml"
+
+  - name: install bundle
+    command: bundle install chdir="{{ mortimer_app_root }}" creates="{{ mortimer_app_root }}/vendor/bundle"
+
+  - name: setup prod database
+    command: bundle exec rake db:setup chdir="{{ mortimer_app_root }}"
+    environment:
+      RAILS_ENV: production
+    with_items: mysql_create_databases.results
+    when: item.changed == true and item.db == "{{ mortimer_production_database }}"
+
+  - name: setup development database
+    command: bundle exec rake db:setup chdir="{{ mortimer_app_root }}"
+    environment:
+      RAILS_ENV: development
+    with_items: mysql_create_databases.results
+    when: item.changed == true and item.db == "{{ mortimer_development_database }}"
+
+  - name: setup test database
+    command: bundle exec rake db:setup chdir="{{ mortimer_app_root }}"
+    environment:
+      RAILS_ENV: test
+    with_items: mysql_create_databases.results
+    when: item.changed == true and item.db == "{{ mortimer_test_database }}"
