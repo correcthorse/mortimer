@@ -42,5 +42,7 @@ mysql_host: localhost
 httpd_mpm: event
 httpd_mod_ssl: true
 httpd_open_http_port: true
+httpd_open_https_port: true
+httpd_ssl_disable_default_vhost: true
 httpd_default_override: All
 httpd_can_network_connect: 'yes'
