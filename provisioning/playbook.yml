@@ -12,6 +12,9 @@
 
   tasks:
 
+  - name: symlink app dir into home dir
+    file: src="{{ mortimer_app_root }}" path=/home/vagrant/mortimer state=link
+
   - name: configure databases
     template: src=templates/database.yml.j2 dest="{{ mortimer_app_root }}/config/database.yml"
 
