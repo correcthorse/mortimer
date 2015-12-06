@@ -16,9 +16,9 @@ Vagrant.configure(2) do |config|
 
 # uncomment to refresh correcthorse ansible roles from github
 
-#  config.vm.provision "ansible" do |galaxy|
-#    galaxy.playbook = "provisioning/galaxy.yml"
-#  end
+  config.vm.provision "ansible" do |galaxy|
+    galaxy.playbook = "provisioning/galaxy.yml"
+  end
 
   config.vm.define "mortimer-box" do |box| 
 
