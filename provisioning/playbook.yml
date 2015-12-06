@@ -12,5 +12,8 @@
 
   tasks:
 
+  - name: configure databases
+    template: src=templates/database.yml.j2 dest="{{ mortimer_app_root }}/config/database.yml"
+
   - name: install bundle
     command: bundle install chdir="/var/www/mortimer.local/www" creates="/var/www/mortimer.local/www/vendor/bundle"

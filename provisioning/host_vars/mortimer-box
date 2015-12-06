@@ -1,6 +1,8 @@
 ---
+mysql_install_server: true
+
 httpd_vhosts:
   - servername: mortimer.local
-    documentroot: /var/www/mortimer.local/www/public
+    documentroot: "{{ mortimer_doc_root }}"
     redirect_http_to_https: true
     
