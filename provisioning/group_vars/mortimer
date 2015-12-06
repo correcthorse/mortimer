@@ -1,4 +1,7 @@
 ---
+common_extra_packages:
+  - sqlite-devel
+
 httpd_mpm: event
 httpd_mod_ssl: true
 httpd_open_http_port: true

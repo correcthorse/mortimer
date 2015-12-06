@@ -1,7 +1,16 @@
 ---
-- hosts: mortimer-box
+- hosts: mortimer
   roles:
   - { role: correcthorse.common }
   - { role: correcthorse.mysql }
   - { role: correcthorse.httpd }
   - { role: correcthorse.ruby }
+
+- hosts: mortimer-box
+  become: yes
+  become_user: vagrant
+
+  tasks:
+
+  - name: install bundle
+    command: bundle install chdir="/var/www/mortimer.local/www" creates="/var/www/mortimer.local/www/vendor/bundle"
