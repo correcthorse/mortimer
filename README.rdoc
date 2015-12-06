@@ -118,7 +118,7 @@ mortimer features a fairly comprehensive test suite using Shoulda. To run the te
 
 There is now a vagrant box to test out this software. It is provisioned via Ansible so you will need to be on an Ansible supported system to run it. It sets up mortimer from scratch on a CentOS 7 box using the built-in ruby 2.0. The bundle is installed and the prod/dev/test databases are created and setup. You can begin from the INSTALL section above.
 
-After the installation setups are complete, you should be able to https://localhost:8443 and log in.
+After the installation steps are complete, you should be able to access https://localhost:8443 and log in.
 
 If you'd like to access mysql as root, sudo to the root user and just run mysql, the credentials are saved in ~/.my.cnf
 
