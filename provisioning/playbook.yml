@@ -25,19 +25,19 @@
     command: bundle exec rake db:setup chdir="{{ mortimer_app_root }}"
     environment:
       RAILS_ENV: production
-    with_items: mysql_create_databases.results
+    with_items: "{{ mysql_create_databases.results }}"
     when: item.changed == true and item.db == "{{ mortimer_production_database }}"
 
   - name: setup development database
     command: bundle exec rake db:setup chdir="{{ mortimer_app_root }}"
     environment:
       RAILS_ENV: development
-    with_items: mysql_create_databases.results
+    with_items: "{{ mysql_create_databases.results }}"
     when: item.changed == true and item.db == "{{ mortimer_development_database }}"
 
   - name: setup test database
     command: bundle exec rake db:setup chdir="{{ mortimer_app_root }}"
     environment:
       RAILS_ENV: test
-    with_items: mysql_create_databases.results
+    with_items: "{{ mysql_create_databases.results }}"
     when: item.changed == true and item.db == "{{ mortimer_test_database }}"
