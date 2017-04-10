@@ -5,7 +5,7 @@ ENV['PYTHONIOENCODING'] = "utf-8"
 
 Vagrant.configure(2) do |config|
 
-  config.vm.box = "boxcutter/centos71"
+  config.vm.box = "boxcutter/centos73"
 
   config.vm.synced_folder ".", "/var/www/mortimer.local/www"
 
